@@ -18,7 +18,9 @@ class EmployeeController extends Controller
                     ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
                     ->select('users.*', 'employees.birth_date', 'employees.gender')
                     ->get(); 
-        $userList = DB::table('users')->get();
+        $userList = DB::table('users')
+                    ->where('role_name','!=','Admin')
+                    ->get();
         return view('form.allemployeecard',compact('users','userList'));
     }
     // all employee list
@@ -30,6 +32,11 @@ class EmployeeController extends Controller
                     ->get();
         $userList = DB::table('users')
                     ->where('role_name','!=','Admin')
+                    ->join('profile_information', 'users.email','=', 'profile_information.email')
+                    ->select('users.*', 'profile_information.gender', 'profile_information.birth_date')
+                    ->get();
+        $profiles = DB::table('profile_information')
+                    ->select('gender')
                     ->get();
         return view('form.employeelist',compact('users','userList'));
     }
@@ -61,13 +68,12 @@ class EmployeeController extends Controller
                 $employee->save();
                 
                 $profile = [
-                    'name'              =>$request->name,
                     'birth_date'        => $request->birthDate,
                     'gender'            => $request->gender,
                     'email'             =>$request->email,
                 ];
-                
-                DB::table('profile_information')->update($profile);
+                $email = $request->email;
+                DB::table('profile_information')->where('email', $email)->update($profile);
                 DB::commit();
                 Toastr::success('Add new employee successfully :)','Success');
                 return redirect()->route('all/employee/list');

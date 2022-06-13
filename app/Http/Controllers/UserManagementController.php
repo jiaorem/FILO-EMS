@@ -52,36 +52,11 @@ class UserManagementController extends Controller
         Session::put('user', $user);
         $user=Session::get('user');
         $profile = $user->rec_id;
-       
+        $email = $user->email;
         $user = DB::table('users')->get();
-        $employees = DB::table('profile_information')->where('rec_id',$profile)->first();
+        $information = DB::table('profile_information')->where('email',$email)->first();
 
-        if(empty($employees))
-        {
-            $information = DB::table('profile_information')->where('rec_id',$profile)->first();
-            return view('usermanagement.profile_user',compact('information','user'));
-
-        }else{
-            $rec_id = $employees->rec_id;
-            if($rec_id == $profile)
-            {
-                $information = DB::table('profile_information')->where('rec_id',$profile)->first();
-                return view('usermanagement.profile_user',compact('information','user'));
-            }else{
-                $information = ProfileInformation::all();
-                return view('usermanagement.profile_user',compact('information','user'));
-            } 
-        }
-
-        // $user = Auth::User();
-        // Session::put('user', $user);
-        // $user=Session::get('user');
-        // $rec_id = $user->rec_id;
-         
-        // $users = DB::table('users')->where('rec_id',$rec_id)->get();
-        // $profile_information = DB::table('profile_information')->where('rec_id',$rec_id)->get();
-        // return view('usermanagement.profile_user', compact('profile_information', 'users'));
-       
+        return view('usermanagement.profile_user',compact('information','user'));
     }
 
     // save profile information
@@ -122,19 +97,30 @@ class UserManagementController extends Controller
             $information->phone_number = $request->phone_number;
             $information->save();
 
-            $update = User::updateOrCreate(['rec_id' => $request->rec_id]);
+            $update = User::updateOrCreate(['email' => $request->email]);
             $update->name         = $request->name;
-            $update->rec_id       = $request->rec_id;
             $update->email        = $request->email;
             $update->phone_number = $request->phone_number;
             $update->save();
 
+            $employee = [
+                'name'         => $request->name,
+                'email'        => $request->email,
+                'birth_date'   => $request->birthDate,
+                'gender'       => $request->gender,
+            ];
+            
+            $employees_table = DB::table('employees')->where('employee_id',$request->rec_id)->first();
+            if (!empty($employees_table)){
+                DB::table('employees')->where('employee_id',$request->rec_id)->update();
+            }
+
             DB::commit();
-            Toastr::success('Profile Information successfully :)','Success');
+            Toastr::success('Profile Information successfully','Success');
             return redirect()->back();
         }catch(\Exception $e){
             DB::rollback();
-            Toastr::error('Add Profile Information fail :)','Error');
+            Toastr::error('Add Profile Information fail','Error');
             return redirect()->back();
         }
     }
@@ -172,19 +158,21 @@ class UserManagementController extends Controller
 
             DB::commit();
 
+            $gender = "";
             $profile = [
                 'name'              =>$request->name,
+                'birth_date'        => $request->birthDate,
+                'phone_number'      => $request->phone,
                 'email'             =>$request->email,
-                'phone_number'      =>$request->phone,
+                'gender'            =>$gender
             ];
-            
-            ProfileInformation::where('rec_id',$request->employee_id)->update($profile);
 
-            Toastr::success('Create new account successfully :)','Success');
+            DB::table('profile_information')->insert($profile);
+            Toastr::success('Create new account successfully','Success');
             return redirect()->route('userManagement');
         }catch(\Exception $e){
             DB::rollback();
-            Toastr::error('User add new account fail :)','Error');
+            Toastr::error('User add new account fail','Error');
             return redirect()->back();
         }
     }
@@ -252,18 +240,18 @@ class UserManagementController extends Controller
                 'email'        => $email,
             ];
             
-            ProfileInformation::where('rec_id',$request->rec_id)->update($profile);
+            ProfileInformation::where('email',$request->email)->update($profile);
             DB::table('user_activity_logs')->insert($activityLog);
             User::where('rec_id',$request->rec_id)->update($update);
             Employee::where('employee_id',$request->rec_id)->update($employee);
             
             DB::commit();
-            Toastr::success('User updated successfully :)','Success');
+            Toastr::success('User updated successfully','Success');
             return redirect()->route('userManagement');
 
         }catch(\Exception $e){
             DB::rollback();
-            Toastr::error('User update fail :)','Error');
+            Toastr::error('User update fail','Error');
             return redirect()->back();
         }
     }
@@ -332,7 +320,7 @@ class UserManagementController extends Controller
 
         User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
         DB::commit();
-        Toastr::success('User change successfully :)','Success');
+        Toastr::success('User change successfully','Success');
         return redirect()->intended('home');
     }
 }

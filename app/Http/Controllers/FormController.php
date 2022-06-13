@@ -53,11 +53,11 @@ class FormController extends Controller
                 'phone_number'  => $phone_number,
             ];
             Staff::where('id',$request->id)->update($update);
-            Toastr::success('Data updated successfully :)','Success');
+            Toastr::success('Data updated successfully','Success');
             return redirect()->route('form/view/detail');
         }catch(\Exception $e){
 
-            Toastr::error('Data updated fail :)','Error');
+            Toastr::error('Data updated fail','Error');
             return redirect()->route('form/view/detail');
         }
     }
@@ -83,12 +83,12 @@ class FormController extends Controller
             $Staff->phone_number  = $phone_number;
             $Staff->save();
 
-            Toastr::success('Data added successfully :)','Success');
+            Toastr::success('Data added successfully','Success');
             return redirect()->back();
 
         }catch(\Exception $e){
 
-            Toastr::error('Data added fail :)','Error');
+            Toastr::error('Data added fail','Error');
             return redirect()->back();
         }
     }
@@ -98,7 +98,7 @@ class FormController extends Controller
     {
         $delete = Staff::find($id);
         $delete->delete();
-        Toastr::success('Data deleted successfully :)','Success');
+        Toastr::success('Data deleted successfully','Success');
         return redirect()->route('form/view/detail');
     }
 }

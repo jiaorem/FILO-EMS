@@ -95,7 +95,7 @@
                                             <ul class="personal-info">
                                                 @if(!empty($information))
                                                     <li>
-                                                        @if(Auth::user()->rec_id == $information->rec_id)
+                                                        @if(!empty($information->phone_number))
                                                         <div class="title">Phone:</div>
                                                         <div class="text">{{ $information->phone_number }}</div>
                                                         @else
@@ -104,16 +104,16 @@
                                                         @endif
                                                     </li>
                                                     <li>
-                                                        @if(Auth::user()->rec_id == $information->rec_id)
+                                                        @if(!empty($information->email))
                                                         <div class="title">Email:</div>
                                                         <div class="text">{{ $information->email }}</div>
                                                         @else
-                                                        <div class="title">Phone:</div>
+                                                        <div class="title">Email:</div>
                                                         <div class="text">N/A</div>
                                                         @endif
                                                     </li>
                                                     <li>
-                                                        @if(Auth::user()->rec_id == $information->rec_id)
+                                                        @if(!empty($information->birth_date))
                                                         <div class="title">Birthday:</div>
                                                         <div class="text">{{date('d F, Y',strtotime($information->birth_date)) }}</div>
                                                         @else
@@ -122,7 +122,7 @@
                                                         @endif
                                                     </li>
                                                     <li>
-                                                        @if(Auth::user()->rec_id == $information->rec_id)
+                                                        @if(!empty($information->address))
                                                         <div class="title">Address:</div>
                                                         <div class="text">{{ $information->address }}</div>
                                                         @else
@@ -131,7 +131,7 @@
                                                         @endif
                                                     </li>
                                                     <li>
-                                                        @if(Auth::user()->rec_id == $information->rec_id)
+                                                        @if(!empty($information->gender))
                                                         <div class="title">Gender:</div>
                                                         <div class="text">{{ $information->gender }}</div>
                                                         @else
@@ -140,6 +140,14 @@
                                                         @endif
                                                     </li>
                                                     @else
+                                                    <li>
+                                                        <div class="title">Phone:</div>
+                                                        <div class="text">N/A</div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">Email:</div>
+                                                        <div class="text">N/A</div>
+                                                    </li>
                                                     <li>
                                                         <div class="title">Birthday:</div>
                                                         <div class="text">N/A</div>

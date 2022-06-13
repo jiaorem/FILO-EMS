@@ -175,7 +175,7 @@
                                 <div class="col-sm-6"> 
                                     <div class="form-group">
                                         <label>Phone</label>
-                                        <input class="form-control" type="tel" id="" name="phone" placeholder="Enter Phone">
+                                        <input class="form-control" type="tel" id="" name="phone" placeholder="Enter Phone" required>
                                     </div>
                                 </div>
                             </div>
@@ -237,12 +237,10 @@
                             </div>
                             <div class="row"> 
                                 <div class="col-sm-6"> 
-                                    <label>Role Name</label>
-                                    <select class="select" name="role_name" id="e_role_name">
-                                        @foreach ($role_name as $role )
-                                        <option value="{{ $role->role_type }}">{{ $role->role_type }}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="form-group">
+                                    <label class="col-form-label">Role Name</label>
+                                        <input type="text" class="form-control" id="role_name" name="role_name" value="Employee" placeholder="Employee" readonly>
+                                </div>
                                 </div>
                             <br>
                                 <div class="col-sm-6"> 
@@ -254,9 +252,15 @@
                             </div>
                             <div class="row"> 
                                 <div class="col-sm-6"> 
-                                    <label>Photo</label>
-                                    <input class="form-control" type="file" id="image" name="images" required>
+                                <label>Photo</label>
+                                @if(!empty(Auth::user()->avatar))
+                                    <input type="text" class="form-control" placeholder="{{ Auth::user()->avatar }}" readonly>
+                                    <input class="form-control" type="file" id="image" name="images">
                                     <input type="hidden" name="hidden_image" id="e_image" value="{{ Auth::user()->avatar }}">
+                                    @else
+                                    <input class="form-control" type="file" id="image" name="images">
+                                    <input type="hidden" name="hidden_image" id="e_image" value="{{ Auth::user()->avatar }}">
+                                    @endif
                                 </div>
 
                             </div>

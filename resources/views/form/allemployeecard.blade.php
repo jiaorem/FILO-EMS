@@ -205,6 +205,7 @@
         {
             $('#employee_id').val($(this).find(':selected').data('employee_id'));
             $('#email').val($(this).find(':selected').data('email'));
+            $('#gender').val($(this).find(':selected').data('gender'));
         });
     </script>
     {{-- update js --}}

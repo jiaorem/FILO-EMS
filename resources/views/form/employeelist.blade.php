@@ -151,19 +151,19 @@
                                         <label class="col-form-label">Full Name</label>
                                         <select class="select" id="name" name="name">
                                             <option value="">-- Select --</option>
-                                            @foreach ($userList as $key=>$user )
+                                            @foreach ($userList as $key=>$user)
                                                 <option value="{{ $user->name }}" data-employee_id={{ $user->rec_id }} data-email={{ $user->email }}>{{ $user->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                            
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Email <span class="text-danger">*</span></label>
                                         <input class="form-control" type="email" id="email" name="email" placeholder="Auto email" readonly>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Birth Date</label>
@@ -176,6 +176,7 @@
                                     <div class="form-group">
                                         <label>Gender</label>
                                         <select class="select form-control" id="gender" name="gender">
+                                            <option value="">--Select Gender--</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>
@@ -222,6 +223,11 @@
         {
             $('#employee_id').val($(this).find(':selected').data('employee_id'));
             $('#email').val($(this).find(':selected').data('email'));
+        });
+
+        $('#name').on('change',function()
+        {
+            
         });
     </script>
     @endsection

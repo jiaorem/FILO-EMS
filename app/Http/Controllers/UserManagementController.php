@@ -110,9 +110,9 @@ class UserManagementController extends Controller
                 'gender'       => $request->gender,
             ];
             
-            $employees_table = DB::table('employees')->where('employee_id',$request->rec_id)->first();
+            $employees_table = DB::table('employees')->where('email',$request->email)->first();
             if (!empty($employees_table)){
-                DB::table('employees')->where('employee_id',$request->rec_id)->update();
+                DB::table('employees')->where('email',$request->email)->update($employee);
             }
 
             DB::commit();
@@ -258,16 +258,13 @@ class UserManagementController extends Controller
     // delete
     public function delete(Request $request)
     {
-        $user = Auth::User();
-        Session::put('user', $user);
-        $user=Session::get('user');
         DB::beginTransaction();
         try{
-            $fullName     = $user->name;
-            $email        = $user->email;
-            $phone_number = $user->phone_number;
-            $role_name    = $user->role_name;
-            $rec_id       = $user->rec_id;
+            $fullName     = $request->name;
+            $email        = $request->email;
+            $phone_number = $request->phone_number;
+            $role_name    = $request->role_name;
+            $rec_id       = $request->rec_id;
 
             $dt       = Carbon::now();
             $todayDate = $dt->toDayDateTimeString();
@@ -284,7 +281,8 @@ class UserManagementController extends Controller
 
             DB::table('user_activity_logs')->insert($activityLog);
             User::destroy($request->rec_id);
-            ProfileInformation::destroy($request->rec_id);
+            DB::table('profile_information')->where('email',$request->email)->delete();
+
             
             if($request->avatar =='photo_defaults.jpg'){
                 User::destroy($request->id);

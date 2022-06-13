@@ -34,7 +34,7 @@ class LockScreen extends Controller
 
         if(!$check)
         {
-            Toastr::error('fail, Your password does not match :)','Error');
+            Toastr::error('fail, Your password does not match','Error');
             return redirect()->route('lock_screen');
         }
         session(['lock-expires-at' => now()->addMinutes($request->user()->getLockoutTime())]);

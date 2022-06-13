@@ -31,12 +31,12 @@ class HolidayController extends Controller
             $holiday->save();
             
             DB::commit();
-            Toastr::success('Create new holiday successfully :)','Success');
+            Toastr::success('Create new holiday successfully','Success');
             return redirect()->back();
             
         } catch(\Exception $e) {
             DB::rollback();
-            Toastr::error('Add Holiday fail :)','Error');
+            Toastr::error('Add Holiday fail','Error');
             return redirect()->back();
         }
     }
@@ -58,12 +58,12 @@ class HolidayController extends Controller
 
             Holiday::where('id',$request->id)->update($update);
             DB::commit();
-            Toastr::success('Holiday updated successfully :)','Success');
+            Toastr::success('Holiday updated successfully','Success');
             return redirect()->back();
 
         }catch(\Exception $e){
             DB::rollback();
-            Toastr::error('Holiday update fail :)','Error');
+            Toastr::error('Holiday update fail','Error');
             return redirect()->back();
         }
     }

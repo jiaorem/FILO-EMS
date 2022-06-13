@@ -52,11 +52,11 @@ class LeavesController extends Controller
             $leaves->save();
             
             DB::commit();
-            Toastr::success('Create new Leaves successfully :)','Success');
+            Toastr::success('Create new Leaves successfully','Success');
             return redirect()->back();
         } catch(\Exception $e) {
             DB::rollback();
-            Toastr::error('Add Leaves fail :)','Error');
+            Toastr::error('Add Leaves fail','Error');
             return redirect()->back();
         }
     }
@@ -82,11 +82,11 @@ class LeavesController extends Controller
             DB::commit();
             
             DB::commit();
-            Toastr::success('Updated Leaves successfully :)','Success');
+            Toastr::success('Updated Leaves successfully','Success');
             return redirect()->back();
         } catch(\Exception $e) {
             DB::rollback();
-            Toastr::error('Update Leaves fail :)','Error');
+            Toastr::error('Update Leaves fail','Error');
             return redirect()->back();
         }
     }
@@ -115,11 +115,11 @@ class LeavesController extends Controller
             DB::commit();
             
             DB::commit();
-            Toastr::success('Updated Leaves successfully :)','Success');
+            Toastr::success('Updated Leaves successfully','Success');
             return redirect()->back();
         } catch(\Exception $e) {
             DB::rollback();
-            Toastr::error('Update Leaves fail :)','Error');
+            Toastr::error('Update Leaves fail','Error');
             return redirect()->back();
         }
     }
@@ -130,13 +130,13 @@ class LeavesController extends Controller
         try {
 
             LeavesAdmin::destroy($request->id);
-            Toastr::success('Leaves admin deleted successfully :)','Success');
+            Toastr::success('Leaves admin deleted successfully','Success');
             return redirect()->back();
         
         } catch(\Exception $e) {
 
             DB::rollback();
-            Toastr::error('Leaves admin delete fail :)','Error');
+            Toastr::error('Leaves admin delete fail','Error');
             return redirect()->back();
         }
     }

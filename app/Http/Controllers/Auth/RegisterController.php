@@ -47,7 +47,7 @@ class RegisterController extends Controller
             'email'     => $request->email,
         ]);
 
-        Toastr::success('Create new account successfully :)','Success');
+        Toastr::success('Create new account successfully','Success');
         return redirect('login');
     }
 }

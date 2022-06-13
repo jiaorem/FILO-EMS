@@ -31,7 +31,7 @@ class AttendanceController extends Controller
         ]; 
             
         DB::table('employee_attendance')->insert($attendance);
-        Toastr::success('Punched in successfully :)','Success');
+        Toastr::success('Punched in successfully','Success');
         return redirect('home');
     }   
 

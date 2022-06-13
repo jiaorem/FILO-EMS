@@ -75,7 +75,7 @@ class EmployeeController extends Controller
                 $email = $request->email;
                 DB::table('profile_information')->where('email', $email)->update($profile);
                 DB::commit();
-                Toastr::success('Add new employee successfully :)','Success');
+                Toastr::success('Add new employee successfully','Success');
                 return redirect()->route('all/employee/list');
             } else {
                 DB::rollback();
@@ -84,7 +84,7 @@ class EmployeeController extends Controller
             }
         }catch(\Exception $e){
             DB::rollback();
-            Toastr::error('Add new employee fail :)','Error');
+            Toastr::error('Add new employee fail','Error');
             return redirect()->back();
         }
     }
@@ -128,11 +128,11 @@ class EmployeeController extends Controller
             Employee::where('id',$request->id)->update($updateEmployee);
         
             DB::commit();
-            Toastr::success('updated record successfully :)','Success');
+            Toastr::success('updated record successfully','Success');
             return redirect()->route('all/employee/list');
         }catch(\Exception $e){
             DB::rollback();
-            Toastr::error('updated record fail :)','Error');
+            Toastr::error('updated record fail','Error');
             return redirect()->back();
         }
     }
@@ -145,12 +145,12 @@ class EmployeeController extends Controller
             Employee::where('employee_id',$employee_id)->delete();
 
             DB::commit();
-            Toastr::success('Delete record successfully :)','Success');
+            Toastr::success('Delete record successfully','Success');
             return redirect()->route('all/employee/list');
 
         }catch(\Exception $e){
             DB::rollback();
-            Toastr::error('Delete record fail :)','Error');
+            Toastr::error('Delete record fail','Error');
             return redirect()->back();
         }
     }

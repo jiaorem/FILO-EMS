@@ -289,6 +289,7 @@
                                 @csrf
                                 <input type="hidden" name="id" class="e_id" value="">
                                 <input type="hidden" name="avatar" class="e_avatar" value="">
+                                <input type="hidden" name="email" class="e_email" id="email" value="">
                                 <div class="row">
                                     <div class="col-6">
                                         <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</button>

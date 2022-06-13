@@ -80,11 +80,11 @@ class LoginController extends Controller
 
         if (Auth::attempt(['email'=>$email,'password'=>$password,])) {
             DB::table('activity_logs')->insert($activityLog);
-            Toastr::success('Login successfully :)','Success');
+            Toastr::success('Login successfully','Success');
             return redirect()->intended('home');
         }
         else{
-            Toastr::error('fail, WRONG USERNAME OR PASSWORD :)','Error');
+            Toastr::error('fail, WRONG USERNAME OR PASSWORD','Error');
             return redirect('login');
         }
 
@@ -110,7 +110,7 @@ class LoginController extends Controller
         ];
         DB::table('activity_logs')->insert($activityLog);
         Auth::logout();
-        Toastr::success('Logout successfully :)','Success');
+        Toastr::success('Logout successfully','Success');
         return redirect('login');
     }
 
